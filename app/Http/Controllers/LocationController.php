@@ -80,10 +80,10 @@ class LocationController extends Controller
      * @param  \App\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function edit(Location $location)
+    public function edit($id)
     {
         //
-        $location = Location::find($location_id);
+        $location = Location::find($id);
 
 
         return view('locations/edit',['location'=> $location]);
@@ -96,9 +96,23 @@ class LocationController extends Controller
      * @param  \App\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $location)
+    public function update(Request $request,$id)
     {
         //
+        $this->validate($request, [
+            'hospital' => 'required|max:255',
+            'consulta' => 'required|max:255',
+
+        ]);
+
+        $location = Location::find($id);
+        $location->fill($request->all());
+
+        $location->save();
+
+        flash('Localizacion modificada correctamente');
+
+        return redirect()->route('locations.index');
     }
 
     /**
@@ -107,8 +121,15 @@ class LocationController extends Controller
      * @param  \App\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Location $location)
+    public function destroy($id)
     {
         //
+        {
+            $location = Location::find($id);
+            $location->delete();
+            flash('Localizacion borrada correctamente');
+
+            return redirect()->route('locations.index');
+        }
     }
 }
