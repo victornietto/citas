@@ -17,5 +17,9 @@ class Cita extends Model
     {
         return $this->belongsTo('App\Paciente');
     }
+    public function location()
+    {
+        return $this->belongsTo('App\Location');
+    }
 
 }
