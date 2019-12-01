@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                     CGIS: Citas Pacientes CON CAMBIO
+                     CGIS: RG4L
                 </div>
 
                 <div class="links">
