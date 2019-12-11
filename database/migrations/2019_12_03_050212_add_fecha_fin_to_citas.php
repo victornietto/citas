@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLocationToCitas extends Migration
+class AddFechaFinToCitas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class AddLocationToCitas extends Migration
      */
     public function up()
     {
-        Schema::table('citas', function (Blueprint $table) {
-            $table->unsignedInteger('location_id');
-            $table->foreign('location_id')->references('id')->on('locations');
+        //
+        Schema::table('citas', function (Blueprint $table){
+            $table->dateTime('fecha_fin');
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -25,6 +26,6 @@ class AddLocationToCitas extends Migration
      */
     public function down()
     {
-        Schema::dropifExists('citas');
+        //
     }
 }
