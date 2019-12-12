@@ -9,7 +9,6 @@ use App\Medico;
 use App\Paciente;
 
 
-
 class CitaController extends Controller
 {
 
@@ -42,10 +41,10 @@ class CitaController extends Controller
 
         $pacientes = Paciente::all()->pluck('full_name','id');
 
-        $locations = Location::all()->pluck('hospital','id');
+        $locations = Location::all()->pluck('full_name','id');
 
 
-        return view('citas/create',['medicos'=>$medicos, 'pacientes'=>$pacientes,'locations'=> $locations]);
+        return view('citas/create',['medicos'=>$medicos, 'pacientes'=>$pacientes, 'locations'=>$locations]);
     }
 
     /**
@@ -60,11 +59,17 @@ class CitaController extends Controller
             'medico_id' => 'required|exists:medicos,id',
             'paciente_id' => 'required|exists:pacientes,id',
             'fecha_hora' => 'required|date|after:now',
-            'location' => 'required|exists|exists:locations,hospital',
+            'location_id' => 'required|exists:locations,id'
 
         ]);
 
         $cita = new Cita($request->all());
+        $cita->save();
+
+        $min15 = new \DateInterval('PT15M');
+        $fecha_inicio = new \DateTime($cita->fecha_hora);
+        $fecha_inicio -> createFromFormat('Y-m-d/Th:i', $cita->fecha_hora);
+        $cita->fecha_fin = $fecha_inicio->add($min15);
         $cita->save();
 
 
@@ -99,8 +104,10 @@ class CitaController extends Controller
 
         $pacientes = Paciente::all()->pluck('full_name','id');
 
+        $locations = Location::all()->pluck('full_name','id');
 
-        return view('citas/edit',['cita'=> $cita, 'medicos'=>$medicos, 'pacientes'=>$pacientes]);
+
+        return view('citas/edit',['cita'=> $cita, 'medicos'=>$medicos, 'pacientes'=>$pacientes, 'locations'=>$locations]);
     }
 
     /**
@@ -116,11 +123,18 @@ class CitaController extends Controller
             'medico_id' => 'required|exists:medicos,id',
             'paciente_id' => 'required|exists:pacientes,id',
             'fecha_hora' => 'required|date|after:now',
+            'location_id' => 'required|exists:locations,id'
 
         ]);
         $cita = Cita::find($id);
         $cita->fill($request->all());
 
+        $cita->save();
+
+        $min15 = new \DateInterval('PT15M');
+        $fecha_inicio = new \DateTime($cita->fecha_hora);
+        $fecha_inicio -> createFromFormat('Y-m-d/Th:i', $cita->fecha_hora);
+        $cita->fecha_fin = $fecha_inicio->add($min15);
         $cita->save();
 
         flash('Cita modificada correctamente');
