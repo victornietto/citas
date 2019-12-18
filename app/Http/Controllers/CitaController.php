@@ -68,7 +68,7 @@ class CitaController extends Controller
 
         $min15 = new \DateInterval('PT15M');
         $fecha_inicio = new \DateTime($cita->fecha_hora);
-        $fecha_inicio -> createFromFormat('Y-m-d/Th:i', $cita->fecha_hora);
+        $fecha_inicio -> createFromFormat('d-m-Y/Th:i', $cita->fecha_hora);
         $cita->fecha_fin = $fecha_inicio->add($min15);
         $cita->save();
 
@@ -133,7 +133,7 @@ class CitaController extends Controller
 
         $min15 = new \DateInterval('PT15M');
         $fecha_inicio = new \DateTime($cita->fecha_hora);
-        $fecha_inicio -> createFromFormat('Y-m-d/Th:i', $cita->fecha_hora);
+        $fecha_inicio -> createFromFormat('d-m-Y/Th:i', $cita->fecha_hora);
         $cita->fecha_fin = $fecha_inicio->add($min15);
         $cita->save();
 

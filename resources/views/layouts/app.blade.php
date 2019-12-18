@@ -78,6 +78,12 @@
                                     </li>
 
                                     <li>
+                                        <a href="{{ url('/diseases') }}">
+                                            Enfermedades
+                                        </a>
+                                    </li>
+
+                                    <li>
                                         <a href="{{ url('/pacientes') }}">
                                             Pacientes
                                         </a>
