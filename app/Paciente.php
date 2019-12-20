@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Paciente extends Model
 {
     //
-    protected $fillable = ['name', 'surname', 'nuhsa'];
+    protected $fillable = ['name', 'surname', 'nuhsa', 'enfermedad_id'];
 
 
-    public function citas()
+    public function enfermedad()
     {
-        return $this->hasMany('App\Cita');
+        return $this->belongsTo('App\Enfermedad');
     }
 
 

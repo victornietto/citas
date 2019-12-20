@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Location;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Cita;
 use App\Medico;
@@ -25,9 +26,16 @@ class CitaController extends Controller
      */
     public function index()
     {
-        $citas = Cita::all();
+        $citas = Cita::all()->where('fecha_hora','>', Carbon::now());
 
         return view('citas/index',['citas'=>$citas]);
+    }
+
+    public function verCitasPasadas()
+    {
+        $citas = Cita::all()->where('fecha_hora','<',Carbon::now());
+
+        return view('citas/verCitasPasadas',['citas'=>$citas]);
     }
 
     /**
@@ -58,7 +66,7 @@ class CitaController extends Controller
         $this->validate($request, [
             'medico_id' => 'required|exists:medicos,id',
             'paciente_id' => 'required|exists:pacientes,id',
-            'fecha_hora' => 'required|date|after:now',
+            'fecha_hora' => 'required|date',
             'location_id' => 'required|exists:locations,id'
 
         ]);

@@ -20,8 +20,9 @@ Route::resource('especialidades', 'EspecialidadController');
 
 Route::resource('medicos', 'MedicoController');
 Route::resource('pacientes', 'PacienteController');
+Route::resource('enfermedades', 'EnfermedadController');
 
-
+Route::get('citas/verCitasPasadas', 'CitaController@verCitasPasadas')->name('citas.verCitasPasadas');
 Route::resource('citas', 'CitaController');
 Route::resource('locations', 'LocationController');
 

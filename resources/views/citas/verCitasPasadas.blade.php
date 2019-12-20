@@ -5,18 +5,11 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Citas</div>
+                    <div class="panel-heading">Citas pasadas</div>
 
                     <div class="panel-body">
-                        @include('flash::message')
-                        {!! Form::open(['route' => 'citas.create', 'method' => 'get']) !!}
-                        {!!   Form::submit('Crear cita', ['class'=> 'btn btn-primary'])!!}
-                        {!! Form::close() !!}
-
-                        <br><br>
-
-                        {!! Form::open(['route' => 'citas.verCitasPasadas', 'method' => 'get']) !!}
-                        {!!   Form::submit('Ver citas pasadas', ['class'=> 'btn btn-primary'])!!}
+                        {!! Form::open(['route' => 'citas.index', 'method' => 'get']) !!}
+                        {!!   Form::submit('Ver cita futuras', ['class'=> 'btn btn-primary'])!!}
                         {!! Form::close() !!}
 
                         <br><br>
@@ -27,7 +20,7 @@
                                 <th>Paciente</th>
                                 <th>Localización</th>
                                 <th>Fecha finalización</th>
-                                <th colspan="2">Acciones</th>
+                                <th colspan="1">Acciones</th>
                             </tr>
 
                             @foreach ($citas as $cita)
@@ -37,13 +30,8 @@
                                     <td>{{ $cita->fecha_hora }}</td>
                                     <td>{{ $cita->medico->full_name }}</td>
                                     <td>{{ $cita->paciente->full_name}}</td>
-                                    <td>{{ $cita->location  ->full_name}}</td>
+                                    <td>{{ $cita->location->full_name}}</td>
                                     <td>{{ $cita->fecha_fin}}</td>
-                                    <td>
-                                        {!! Form::open(['route' => ['citas.edit',$cita->id], 'method' => 'get']) !!}
-                                        {!!   Form::submit('Editar', ['class'=> 'btn btn-warning'])!!}
-                                        {!! Form::close() !!}
-                                    </td>
                                     <td>
                                         {!! Form::open(['route' => ['citas.destroy',$cita->id], 'method' => 'delete']) !!}
                                         {!!   Form::submit('Borrar', ['class'=> 'btn btn-danger' ,'onclick' => 'if(!confirm("¿Está seguro?"))event.preventDefault();'])!!}
